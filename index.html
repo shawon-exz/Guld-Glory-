@@ -1,95 +1,115 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FF Glory Bot - XH SHAWON</title>
-  <link rel="stylesheet" href="style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FW AZAD BOT'S</title>
+    <meta name="description" content="Free Guild Glory Bot FF" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FW AZAD BOT'S" />
+    <meta property="og:description" content="Free Guild Glory Bot FF" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="FW AZAD BOT'S" />
+    <meta name="twitter:description" content="Free Guild Glory Bot FF" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-  <!-- LOGIN SCREEN -->
-  <div id="loginScreen" class="login-container">
-    <div class="login-box">
-      <h1>🔥 XH SHAWON</h1>
-      <p>Free Fire Glory Bot</p>
-      <div class="input-group">
-        <input type="text" id="username" placeholder="Username" />
-      </div>
-      <div class="input-group">
-        <input type="password" id="password" placeholder="Password" />
-      </div>
-      <button id="loginBtn" class="btn primary">Login</button>
-      <p id="loginError" class="error-msg"></p>
+  <body>
+    <div id="root">
+      <!-- Header -->
+      <header class="header">
+        <div class="container header-inner">
+          <a href="#" class="logo">
+            <span class="logo-icon">🤖</span>
+            <span class="logo-text">FW AZAD BOT'S</span>
+          </a>
+          <nav class="nav">
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+        </div>
+      </header>
+
+      <!-- Hero -->
+      <section class="hero" id="home">
+        <div class="container hero-inner">
+          <h1 class="hero-title">Free Guild Glory Bot</h1>
+          <p class="hero-subtitle">
+            Boost your Free Fire guild with our automated glory bot. Fast, safe &amp; reliable.
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="startBtn">Get Started</button>
+            <button class="btn btn-secondary" id="infoBtn">Learn More</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Features -->
+      <section class="features" id="features">
+        <div class="container">
+          <h2 class="section-title">Features</h2>
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">⚡</div>
+              <h3>Fast Glory</h3>
+              <p>Get guild glory quickly with our optimized bot.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🔒</div>
+              <h3>Safe &amp; Secure</h3>
+              <p>Your account information is always protected.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">🎯</div>
+              <h3>Auto Mode</h3>
+              <p>Fully automated — no manual work required.</p>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">💸</div>
+              <h3>100% Free</h3>
+              <p>No hidden costs. Completely free to use.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About -->
+      <section class="about" id="about">
+        <div class="container about-inner">
+          <h2 class="section-title">About</h2>
+          <p class="about-text">
+            FW AZAD BOT'S is a free guild glory bot designed for Free Fire players.
+            Our mission is to help small guilds reach the top without spending money.
+          </p>
+        </div>
+      </section>
+
+      <!-- Contact -->
+      <section class="contact" id="contact">
+        <div class="container">
+          <h2 class="section-title">Contact</h2>
+          <p class="contact-text">Have questions? Reach out to us.</p>
+          <form class="contact-form" id="contactForm">
+            <input type="text" name="name" placeholder="Your Name" required />
+            <input type="email" name="email" placeholder="Your Email" required />
+            <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
+            <button type="submit" class="btn btn-primary">Send Message</button>
+          </form>
+          <p class="form-status" id="formStatus"></p>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="container footer-inner">
+          <p>&copy; <span id="year"></span> FW AZAD BOT'S. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
-  </div>
 
-  <!-- MAIN APP (Hidden initially) -->
-  <div class="app" id="mainApp" style="display: none;">
-    <header class="header">
-      <h1>🔥 Free Fire <span>Glory Bot</span></h1>
-      <p class="subtitle">Advanced Auto Guild Join & Match System</p>
-      <button id="logoutBtn" class="btn small danger" style="margin-top: 10px;">Logout</button>
-    </header>
-
-    <!-- Scoreboard -->
-    <section class="scoreboard">
-      <div class="score-card total">
-        <span class="label">🏆 Squad Total Glory</span>
-        <span id="totalGlory" class="value">0</span>
-      </div>
-      <div class="score-card">
-        <span class="label">🎯 Active Bots</span>
-        <span id="activeBots" class="value">0</span>
-      </div>
-      <div class="score-card">
-        <span class="label">🛡️ Guild Status</span>
-        <span id="guildStatus" class="value small">Not Connected</span>
-      </div>
-      <div class="score-card">
-        <span class="label">🆔 Guild UID</span>
-        <span id="guildUidDisplay" class="value small">—</span>
-      </div>
-    </section>
-
-    <!-- Controls -->
-    <section class="controls">
-      <h2>⚙️ Setup Configuration</h2>
-      <div class="input-group">
-        <label for="guildUid">🛡️ Guild UID <span class="required">*</span></label>
-        <input type="text" id="guildUid" placeholder="Enter Guild UID (e.g. 3106761922)" maxlength="20" />
-        <small id="guildUidHint" class="hint">Guild UID is required for bots to join.</small>
-      </div>
-
-      <h2 style="margin-top: 20px;">🎯 Bot Count</h2>
-      <div class="mode-buttons">
-        <button class="mode-btn" data-count="1">1 Bot (Solo)</button>
-        <button class="mode-btn" data-count="2">2 Bots (Duo)</button>
-        <button class="mode-btn" data-count="3">3 Bots (Squad)</button>
-        <button class="mode-btn" data-count="4">4 Bots (Squad Max)</button>
-      </div>
-
-      <div class="action-buttons">
-        <button id="startBtn" class="btn primary" disabled>▶ Start Bots</button>
-        <button id="stopBtn" class="btn danger" disabled>⏹ Stop</button>
-        <button id="resetBtn" class="btn secondary">↻ Reset</button>
-      </div>
-    </section>
-
-    <!-- Bot Cards -->
-    <section class="bots-grid" id="botsGrid"></section>
-
-    <!-- Console -->
-    <section class="console-section">
-      <div class="console-header">
-        <h2>🖥️ Live Console Log</h2>
-        <button id="clearConsole" class="btn small">Clear</button>
-      </div>
-      <div class="console" id="console"></div>
-    </section>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+    <script src="script.js"></script>
+  </body>
+  </html>
