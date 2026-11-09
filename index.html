@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guild Glory Premium</title>
+
+<style>
+:root {
+ --bg:#080D18;
+ --card:#111B2D;
+ --card2:#17243A;
+ --gold:#FFB52E;
+ --blue:#00C8FF;
+ --green:#00E69A;
+ --red:#FF5364;
+ --text:#F4F7FF;
+ --muted:#8795AA;
+ --border:#293A54;
+}
+
+* {
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+}
+
+body {
+ background:var(--bg);
+ color:var(--text);
+ font-family:Arial,sans-serif;
+ padding:18px;
+}
+
+.container {
+ max-width:950px;
+ margin:auto;
+}
+
+header {
+ text-align:center;
+ padding:28px 10px;
+}
+
+header h1 {
+ color:var(--gold);
+ font-size:32px;
+ letter-spacing:3px;
+ text-shadow:0 0 20px #ffb52e55;
+}
+
+header p {
+ color:var(--muted);
+ margin-top:10px;
+ font-size:12px;
+ letter-spacing:2px;
+}
+
+.topbar {
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:10px;
+ margin-bottom:20px;
+}
+
+.statbox {
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:12px;
+ padding:17px 8px;
+ text-align:center;
+}
+
+.statbox h2 {
+ color:var(--gold);
+ font-size:24px;
+}
+
+.statbox p {
+ color:var(--muted);
+ font-size:10px;
+ margin-top:7px;
+}
+
+.card {
+ background:var(--card);
+ border:1px solid var(--border);
+ border-radius:15px;
+ padding:20px;
+ margin-bottom:18px;
+}
+
+.card-title {
+ color:var(--gold);
+ font-size:16px;
+ margin-bottom:18px;
+}
+
+.modes {
+ display:grid;
+ grid-template-columns:repeat(4,1fr);
+ gap:9px;
+}
+
+.mode {
+ background:var(--card2);
+ border:1px solid var(--border);
+ padding:16px 5px;
+ color:white;
+ border-radius:10px;
+ cursor:pointer;
+}
+
+.mode strong {
+ display:block;
+ font-size:15px;
+}
+
+.mode small {
+ color:var(--muted);
+ display:block;
+ margin-top:7px;
+}
+
+.mode.active {
+ border:1px solid var(--gold);
+ background:#403017;
+ color:var(--gold);
+}
+
+input {
+ width:100%;
+ background:#080F1D;
+ color:white;
+ border:1px solid var(--border);
+ padding:14px;
+ border-radius:9px;
+ margin-top:10px;
+ outline:none;
+}
+
+input:focus {
+ border-color:var(--blue);
+}
+
+.btn {
+ width:100%;
+ padding:15px;
+ border:0;
+ border-radius:9px;
+ margin-top:13px;
+ font-weight:bold;
+ font-size:14px;
+ cursor:pointer;
+}
+
+.gold {
+ background:linear-gradient(90deg,#FF9D22,#FFD45A);
+ color:#111;
+}
+
+.blue {
+ background:linear-gradient(90deg,#008DFF,#00D9FF);
+ color:#00121C;
+}
+
+.dark {
+ background:var(--card2);
+ border:1px solid var(--border);
+ color:white;
+}
+
+.btn:disabled {
+ opacity:.4;
+ cursor:not-allowed;
+}
+
+.team {
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
+}
+
+.member {
+ background:var(--card2);
+ border:1px solid var(--border);
+ padding:15px;
+ border-radius:11px;
+}
+
+.member h3 {
+ font-size:14px;
+ margin-bottom:9px;
+}
+
+.member p {
+ font-size:12px;
+ color:var(--muted);
+ margin-top:6px;
+}
+
+.member .points {
+ color:var(--gold);
+ font-size:19px;
+ font-weight:bold;
+ margin-top:9px;
+}
+
+.online {
+ color:var(--green)!important;
+}
+
+.offline {
+ color:var(--red)!important;
+}
+
+.console-btn {
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ cursor:pointer;
+ background:#101F33;
+ border:1px solid var(--blue);
+ padding:17px;
+ border-radius:10px;
+ color:var(--blue);
+ font-weight:bold;
+}
+
+.console {
+ display:none;
+ margin-top:15px;
+ background:#050B13;
+ border:1px solid #1B5269;
+ padding:17px;
+ border-radius:10px;
+}
+
+.console.show {
+ display:block;
+}
+
+.console-head {
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ margin-bottom:15px;
+}
+
+.console-head h3 {
+ color:var(--blue);
+ font-size:15px;
+}
+
+.live {
+ color:var(--green);
+ font-size:11px;
+}
+
+.log {
+ font-family:monospace;
+ font-size:12px;
+ line-height:2;
+ color:#A9BCD0;
+ border-bottom:1px solid #17283A;
+ padding:7px 0;
+ overflow-wrap:anywhere;
+}
+
+.log b {
+ color:var(--green);
+}
+
+.console-grid {
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
+ margin:14px 0;
+}
+
+.console-stat {
+ background:#101C2C;
+ padding:14px;
+ border-radius:8px;
+}
+
+.console-stat small {
+ color:var(--muted);
+ display:block;
+ margin-bottom:7px;
+}
+
+.console-stat strong {
+ color:var(--gold);
+ font-size:20px;
+}
+
+.bot-row {
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:8px;
+ padding:12px 0;
+ border-bottom:1px solid #26374A;
+ font-size:12px;
+}
+
+.bot-row span:last-child {
+ color:var(--gold);
+ font-weight:bold;
+}
+
+.badge {
+ background:#073B2D;
+ color:var(--green);
+ padding:5px 8px;
+ border-radius:5px;
+ font-size:10px;
+}
+
+.footer {
+ text-align:center;
+ color:var(--muted);
+ padding:22px 5px;
+ font-size:11px;
+}
+
+@media(max-width:550px) {
+ header h1 {font-size:25px}
+ .modes {grid-template-columns:repeat(2,1fr)}
+ .topbar {gap:6px}
+ .statbox h2 {font-size:19px}
+ .statbox p {font-size:9px}
+ .card {padding:15px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<header>
+ <h1>GUILD GLORY</h1>
+ <p>PREMIUM BATTLE ROYALE SYSTEM</p>
+</header>
+
+<!-- TOP POINTS -->
+
+<div class="topbar">
+ <div class="statbox">
+  <h2 id="totalTop">0</h2>
+  <p>TOTAL GLORY</p>
+ </div>
+
+ <div class="statbox">
+  <h2 id="botTop">0</h2>
+  <p>BOTS GLORY</p>
+ </div>
+
+ <div class="statbox">
+  <h2 id="matchTop">0</h2>
+  <p>MATCHES</p>
+ </div>
+</div>
+
+<!-- MODE -->
+
+<div class="card">
+ <h3 class="card-title">SELECT GAME MODE</h3>
+
+ <div class="modes">
+  <button class="mode active" onclick="setMode(1,this)">
+   <strong>SOLO</strong><small>1 PLAYER</small>
+  </button>
+
+  <button class="mode" onclick="setMode(2,this)">
+   <strong>DUO</strong><small>2 PLAYERS</small>
+  </button>
+
+  <button class="mode" onclick="setMode(3,this)">
+   <strong>TRIO</strong><small>3 PLAYERS</small>
+  </button>
+
+  <button class="mode" onclick="setMode(4,this)">
+   <strong>SQUAD</strong><small>4 PLAYERS</small>
+  </button>
+ </div>
+</div>
+
+<!-- PLAYER -->
+
+<div class="card">
+ <h3 class="card-title">PLAYER PROFILE</h3>
+ <input id="playerName" placeholder="Enter Player Name">
+ <input id="guildName" placeholder="Enter Guild Name">
+ <button class="btn blue" onclick="joinGuild()">
+  JOIN GUILD
+ </button>
+ <p id="guildStatus" class="offline" style="margin-top:12px;font-size:12px">
+  ● NOT JOINED
+ </p>
+</div>
+
+<!-- TEAM -->
+
+<div class="card">
+ <h3 class="card-title">YOUR BATTLE TEAM</h3>
+
+ <div class="team" id="team"></div>
+
+ <button class="btn gold" onclick="joinTeam()">
+  JOIN TEAM
+ </button>
+
+ <button class="btn blue" id="startBtn"
+ onclick="startMatch()" disabled>
+  START BATTLE ROYALE
+ </button>
+
+ <p id="teamStatus" style="margin-top:12px;color:var(--muted);font-size:12px">
+  Team not ready
+ </p>
+</div>
+
+<!-- CONSOLE -->
+
+<div class="card">
+
+ <div class="console-btn" onclick="toggleConsole()">
+  <span>⌘ LIVE GLORY CONSOLE</span>
+  <span id="arrow">▼</span>
+ </div>
+
+ <div class="console" id="console">
+
+  <div class="console-head">
+   <h3> SYSTEM MONITOR</h3>
+   <span class="live">● SIMULATION</span>
+  </div>
+
+  <div class="console-grid">
+
+   <div class="console-stat">
+    <small>TOTAL GLORY</small>
+    <strong id="cTotal">0</strong>
+   </div>
+
+   <div class="console-stat">
+    <small>BOT GLORY</small>
+    <strong id="cBot">0</strong>
+   </div>
+
+   <div class="console-stat">
+    <small>PLAYER GLORY</small>
+    <strong id="cPlayer">0</strong>
+   </div>
+
+   <div class="console-stat">
+    <small>ACTIVE BOTS</small>
+    <strong id="cBots">0</strong>
+   </div>
+
+  </div>
+
+  <h4 style="color:var(--blue);margin:15px 0">
+   BOT PERFORMANCE
+  </h4>
+
+  <div id="botDetails"></div>
+
+  <h4 style="color:var(--blue);margin:20px 0 10px">
+   GUILD & MATCH STATUS
+  </h4>
+
+  <div class="log" id="guildLog">Guild: Not joined</div>
+  <div class="log" id="matchLog">Match: Waiting</div>
+  <div class="log" id="teamLog">Team: Not ready</div>
+
+  <h4 style="color:var(--blue);margin:20px 0 10px">
+   SYSTEM ACTIVITY
+  </h4>
+
+  <div id="logs">
+   <div class="log">[SYSTEM] Dashboard initialized</div>
+  </div>
+
+  <button class="btn dark" onclick="resetStats()">
+   RESET SIMULATED STATS
+  </button>
+
+ </div>
+</div>
+
+<div class="footer">
+ GUILD GLORY PREMIUM DASHBOARD<br>
+ BATTLE ROYALE • TEAM MONITOR • GLORY TRACKER
+</div>
+
+</div>
+
+<script>
+
+let mode = 1;
+let teamReady = false;
+let guildJoined = false;
+let matches = 0;
+let playerGlory = 0;
+let botGlory = [0,0,0];
+let logs = [];
+
+const names = ["SOLO","DUO","TRIO","SQUAD"];
+
+function addLog(message) {
+ let time = new Date().toLocaleTimeString();
+ logs.unshift(`[${time}] ${message}`);
+ logs = logs.slice(0,12);
+
+ document.getElementById("logs").innerHTML =
+ logs.map(x => `<div class="log">${x}</div>`).join("");
+}
+
+function setMode(n,btn) {
+ mode = n;
+ teamReady = false;
+
+ document.querySelectorAll(".mode")
+ .forEach(x => x.classList.remove("active"));
+
+ btn.classList.add("active");
+
+ document.getElementById("startBtn").disabled = true;
+
+ document.getElementById("teamStatus").innerText =
+ "Team not ready";
+
+ renderTeam();
+ updateConsole();
+
+ addLog("Game mode changed: " + names[n-1]);
+}
+
+function renderTeam() {
+ let team = document.getElementById("team");
+ team.innerHTML = "";
+
+ for(let i=0;i<mode;i++) {
+  let bot = i>0;
+
+  team.innerHTML += `
+   <div class="member">
+    <h3>${bot ? "🤖 BOT "+i : "👑 PLAYER"}</h3>
+    <p>${bot ? "AI TEAMMATE" : "MAIN ACCOUNT"}</p>
+    <p class="online">● READY</p>
+    <div class="points">
+     ${bot ? botGlory[i-1] : playerGlory} GP
+    </div>
+   </div>
+  `;
+ }
+}
+
+function joinGuild() {
+ let name = document.getElementById("guildName").value.trim();
+
+ if(!name) {
+  alert("Enter your Guild Name");
+  return;
+ }
+
+ guildJoined = true;
+
+ document.getElementById("guildStatus").innerHTML =
+ "● GUILD JOINED: " + escapeHTML(name);
+
+ document.getElementById("guildStatus").className = "online";
+
+ document.getElementById("guildLog").innerHTML =
+ "Guild: <b>JOINED</b> | " + escapeHTML(name);
+
+ addLog("Guild join recorded: " + name);
+
+ updateConsole();
+}
+
+function joinTeam() {
+ let name = document.getElementById("playerName").value.trim();
+
+ if(!name) {
+  alert("Enter your player name");
+  return;
+ }
+
+ teamReady = true;
+
+ document.getElementById("startBtn").disabled = false;
+
+ document.getElementById("teamStatus").innerText =
+ "✓ Team ready: " + name + " + " + (mode-1) + " bots";
+
+ document.getElementById("teamLog").innerText =
+ "Team: READY | " + names[mode-1];
+
+ addLog("Team joined with " + mode + " members");
+
+ renderTeam();
+ updateConsole();
+}
+
+function startMatch() {
+ if(!teamReady) return;
+
+ // Simulated point generation only
+ let earned = Math.floor(Math.random()*21)+10;
+
+ playerGlory += earned;
+
+ for(let i=0;i<mode-1;i++) {
+  let botEarned = Math.floor(Math.random()*21)+10;
+  botGlory[i] += botEarned;
+ }
+
+ matches++;
+
+ document.getElementById("matchLog").innerHTML =
+ "Match: <b>SIMULATED COMPLETE</b>";
+
+ addLog("Match simulation completed: " + names[mode-1]);
+
+ renderTeam();
+ updateConsole();
+
+ document.getElementById("teamStatus").innerText =
+ "✓ Simulation complete! Glory updated.";
+}
+
+function toggleConsole() {
+ let box = document.getElementById("console");
+ box.classList.toggle("show");
+
+ document.getElementById("arrow").innerText =
+ box.classList.contains("show") ? "▲" : "▼";
+}
+
+function updateConsole() {
+
+ let botTotal = botGlory.reduce((a,b)=>a+b,0);
+ let total = playerGlory + botTotal;
+
+ document.getElementById("totalTop").innerText = total;
+ document.getElementById("botTop").innerText = botTotal;
+ document.getElementById("matchTop").innerText = matches;
+
+ document.getElementById("cTotal").innerText = total;
+ document.getElementById("cBot").innerText = botTotal;
+ document.getElementById("cPlayer").innerText = playerGlory;
+ document.getElementById("cBots").innerText = mode-1;
+
+ let details = "";
+
+ for(let i=0;i<mode-1;i++) {
+  details += `
+   <div class="bot-row">
+    <span>🤖 BOT ${i+1}</span>
+    <span>${botGlory[i]} GP</span>
+   </div>
+  `;
+ }
+
+ if(mode===1) details =
+ '<div class="log">No bots in Solo mode</div>';
+
+ document.getElementById("botDetails").innerHTML = details;
+}
+
+function resetStats() {
+ if(!confirm("Reset all simulated glory stats?")) return;
+
+ playerGlory = 0;
+ botGlory = [0,0,0];
+ matches = 0;
+
+ renderTeam();
+ updateConsole();
+
+ addLog("Simulated statistics reset");
+}
+
+function escapeHTML(value) {
+ return value.replace(/[&<>"']/g, c => ({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[c]));
+}
+
+renderTeam();
+updateConsole();
+
+</script>
+
+</body>
+</html>
