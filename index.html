@@ -1,17 +1,36 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🔥 Free Fire Glory Bot v4</title>
+  <title>FF Glory Bot - XH SHAWON</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="app">
-    <!-- Header -->
+
+  <!-- LOGIN SCREEN -->
+  <div id="loginScreen" class="login-container">
+    <div class="login-box">
+      <h1>🔥 XH SHAWON</h1>
+      <p>Free Fire Glory Bot</p>
+      <div class="input-group">
+        <input type="text" id="username" placeholder="Username" />
+      </div>
+      <div class="input-group">
+        <input type="password" id="password" placeholder="Password" />
+      </div>
+      <button id="loginBtn" class="btn primary">Login</button>
+      <p id="loginError" class="error-msg"></p>
+    </div>
+  </div>
+
+  <!-- MAIN APP (Hidden initially) -->
+  <div class="app" id="mainApp" style="display: none;">
     <header class="header">
-      <h1>🔥 Free Fire <span>Glory Bot</span> v4</h1>
-      <p class="subtitle">Real Guild Join • Auto Account • Live Battle Royale</p>
+      <h1>🔥 Free Fire <span>Glory Bot</span></h1>
+      <p class="subtitle">Advanced Auto Guild Join & Match System</p>
+      <button id="logoutBtn" class="btn small danger" style="margin-top: 10px;">Logout</button>
     </header>
 
     <!-- Scoreboard -->
@@ -32,20 +51,15 @@
         <span class="label">🆔 Guild UID</span>
         <span id="guildUidDisplay" class="value small">—</span>
       </div>
-      <div class="score-card">
-        <span class="label">🎮 Match State</span>
-        <span id="matchMode" class="value small">—</span>
-      </div>
     </section>
 
     <!-- Controls -->
     <section class="controls">
-      <h2>⚙️ Setup</h2>
-
+      <h2>⚙️ Setup Configuration</h2>
       <div class="input-group">
         <label for="guildUid">🛡️ Guild UID <span class="required">*</span></label>
-        <input type="text" id="guildUid" placeholder="যেমন: 3051234567" maxlength="20" />
-        <small id="guildUidHint" class="hint">Guild UID না দিলে bot guild-এ join করতে পারবে না।</small>
+        <input type="text" id="guildUid" placeholder="Enter Guild UID (e.g. 3106761922)" maxlength="20" />
+        <small id="guildUidHint" class="hint">Guild UID is required for bots to join.</small>
       </div>
 
       <h2 style="margin-top: 20px;">🎯 Bot Count</h2>
@@ -69,7 +83,7 @@
     <!-- Console -->
     <section class="console-section">
       <div class="console-header">
-        <h2>🖥️ Live Console</h2>
+        <h2>🖥️ Live Console Log</h2>
         <button id="clearConsole" class="btn small">Clear</button>
       </div>
       <div class="console" id="console"></div>
