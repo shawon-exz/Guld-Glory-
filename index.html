@@ -3,21 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>🔥 Free Fire Glory Bot Simulator v2</title>
+  <title>🔥 Free Fire Glory Bot v4</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="app">
     <!-- Header -->
     <header class="header">
-      <h1>🔥 Free Fire <span>Glory Bot</span> Simulator</h1>
-      <p class="subtitle">Guild UID Required • Auto Account • Battle Royale Glory Push</p>
+      <h1>🔥 Free Fire <span>Glory Bot</span> v4</h1>
+      <p class="subtitle">Real Guild Join • Auto Account • Live Battle Royale</p>
     </header>
 
     <!-- Scoreboard -->
     <section class="scoreboard">
       <div class="score-card total">
-        <span class="label">🏆 Total Glory</span>
+        <span class="label">🏆 Squad Total Glory</span>
         <span id="totalGlory" class="value">0</span>
       </div>
       <div class="score-card">
@@ -26,34 +26,29 @@
       </div>
       <div class="score-card">
         <span class="label">🛡️ Guild Status</span>
-        <span id="guildStatus" class="value small">Not Joined</span>
+        <span id="guildStatus" class="value small">Not Connected</span>
       </div>
       <div class="score-card">
         <span class="label">🆔 Guild UID</span>
         <span id="guildUidDisplay" class="value small">—</span>
       </div>
       <div class="score-card">
-        <span class="label">🎮 Match Mode</span>
+        <span class="label">🎮 Match State</span>
         <span id="matchMode" class="value small">—</span>
       </div>
     </section>
 
-    <!-- Guild UID + Controls -->
+    <!-- Controls -->
     <section class="controls">
       <h2>⚙️ Setup</h2>
 
       <div class="input-group">
         <label for="guildUid">🛡️ Guild UID <span class="required">*</span></label>
-        <input
-          type="text"
-          id="guildUid"
-          placeholder="যেমন: 3051234567"
-          maxlength="20"
-        />
+        <input type="text" id="guildUid" placeholder="যেমন: 3051234567" maxlength="20" />
         <small id="guildUidHint" class="hint">Guild UID না দিলে bot guild-এ join করতে পারবে না।</small>
       </div>
 
-      <h2 style="margin-top: 20px;">🎯 Select Mode</h2>
+      <h2 style="margin-top: 20px;">🎯 Bot Count</h2>
       <div class="mode-buttons">
         <button class="mode-btn" data-count="1">1 Bot (Solo)</button>
         <button class="mode-btn" data-count="2">2 Bots (Duo)</button>
@@ -62,7 +57,7 @@
       </div>
 
       <div class="action-buttons">
-        <button id="startBtn" class="btn primary" disabled>▶ Start Match</button>
+        <button id="startBtn" class="btn primary" disabled>▶ Start Bots</button>
         <button id="stopBtn" class="btn danger" disabled>⏹ Stop</button>
         <button id="resetBtn" class="btn secondary">↻ Reset</button>
       </div>
