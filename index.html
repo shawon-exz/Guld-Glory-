@@ -1,352 +1,69 @@
 <!DOCTYPE html>
-<html lang="bn" class="dark">
+<html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Fire Guild Glory Push Bot System</title>
-
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        gold: {
-                            400: '#FFE066',
-                            500: '#FFD700',
-                            600: '#CCAC00',
-                        },
-                        cyber: {
-                            dark: '#0a0d14',
-                            card: '#121722',
-                            border: '#1f293d',
-                            neon: '#00f0ff',
-                            purple: '#7000ff'
-                        }
-                    },
-                    fontFamily: {
-                        mono: ['Fira Code', 'JetBrains Mono', 'monospace'],
-                        sans: ['Inter', 'sans-serif'],
-                    }
-                }
-            }
-        }
-    </script>
-
-    <!-- Font Awesome Icons & Google Fonts -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Custom CSS for Cyberpunk Aesthetics -->
-    <style>
-        body {
-            background-color: #06080d;
-            background-image: 
-                radial-gradient(circle at 15% 15%, rgba(255, 215, 0, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 85% 85%, rgba(0, 240, 255, 0.05) 0%, transparent 40%);
-            font-family: 'Inter', sans-serif;
-        }
-
-        /* Neon Glow Effects */
-        .gold-glow {
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.25);
-        }
-        .gold-glow-lg {
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
-        }
-        .cyan-glow {
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.25);
-        }
-
-        /* Glassmorphism */
-        .glass-panel {
-            background: rgba(18, 23, 34, 0.85);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.07);
-        }
-
-        /* Custom Scrollbar for Terminal */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0a0d14;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1f293d;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #FFD700;
-        }
-
-        /* Terminal Line Pulse */
-        @keyframes pulse-light {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
-        }
-        .animate-pulse-slow {
-            animation: pulse-light 2s infinite ease-in-out;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🔥 Free Fire Glory Bot Simulator</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body class="text-slate-200 min-h-screen pb-10">
-
-    <!-- Top Navigation Bar -->
-    <header class="border-b border-cyber-border bg-cyber-dark/80 backdrop-filter blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-gold-600 to-amber-300 flex items-center justify-center text-slate-950 font-black text-xl gold-glow">
-                    <i class="fa-solid font-bold fa-trophy"></i>
-                </div>
-                <div>
-                    <h1 class="font-extrabold text-lg text-white tracking-wide flex items-center gap-2">
-                        GLORY PUSH BOT <span class="bg-gold-500/10 text-gold-500 text-xs px-2 py-0.5 rounded border border-gold-500/30">v3.5 PRO</span>
-                    </h1>
-                    <p class="text-xs text-slate-400">Free Fire Guild Auto Battle Royale System</p>
-                </div>
-            </div>
-
-            <!-- Bot Engine Status Indicator -->
-            <div class="flex items-center space-x-4">
-                <div class="flex items-center space-x-2 bg-cyber-card px-3 py-1.5 rounded-full border border-cyber-border">
-                    <span id="statusPingDot" class="w-2.5 h-2.5 rounded-full bg-slate-500"></span>
-                    <span id="statusPingText" class="text-xs font-semibold text-slate-400">System Ready</span>
-                </div>
-            </div>
-        </div>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <h1>🔥 Free Fire <span>Glory Bot</span> Simulator</h1>
+      <p class="subtitle">Battle Royale • Guild Glory Push • Auto Squad</p>
     </header>
 
-    <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6 space-y-6">
+    <!-- Scoreboard -->
+    <section class="scoreboard">
+      <div class="score-card total">
+        <span class="label">🏆 Total Glory</span>
+        <span id="totalGlory" class="value">0</span>
+      </div>
+      <div class="score-card">
+        <span class="label">🎯 Active Bots</span>
+        <span id="activeBots" class="value">0</span>
+      </div>
+      <div class="score-card">
+        <span class="label">🛡️ Guild Status</span>
+        <span id="guildStatus" class="value small">Not Joined</span>
+      </div>
+      <div class="score-card">
+        <span class="label">🎮 Match Mode</span>
+        <span id="matchMode" class="value small">—</span>
+      </div>
+    </section>
 
-        <!-- Top Live Stats Header (4 Cards) -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            
-            <!-- Card 1: Total Glory -->
-            <div class="glass-panel rounded-2xl p-4 border-l-4 border-gold-500 relative overflow-hidden">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-xs text-slate-400 uppercase font-bold tracking-wider">Total Glory Pushed</p>
-                        <h3 id="statTotalGlory" class="text-3xl font-extrabold text-gold-500 mt-1 font-mono">0</h3>
-                    </div>
-                    <div class="p-3 bg-gold-500/10 rounded-xl text-gold-500">
-                        <i class="fa-solid fa-crown text-xl"></i>
-                    </div>
-                </div>
-                <p class="text-xs text-slate-400 mt-3 flex items-center gap-1">
-                    <span class="text-emerald-400 font-semibold" id="gloryRate">+0</span> / min average
-                </p>
-            </div>
+    <!-- Bot Selector -->
+    <section class="controls">
+      <h2>Select Bots & Mode</h2>
+      <div class="mode-buttons">
+        <button class="mode-btn" data-count="1">1 Bot (Solo)</button>
+        <button class="mode-btn" data-count="2">2 Bots (Duo)</button>
+        <button class="mode-btn" data-count="3">3 Bots (Squad)</button>
+        <button class="mode-btn" data-count="4">4 Bots (Squad Max)</button>
+      </div>
 
-            <!-- Card 2: Active Bots -->
-            <div class="glass-panel rounded-2xl p-4 border-l-4 border-cyan-400 relative overflow-hidden">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-xs text-slate-400 uppercase font-bold tracking-wider">Active Bots</p>
-                        <h3 id="statActiveBots" class="text-3xl font-extrabold text-cyan-400 mt-1 font-mono">0 / 4</h3>
-                    </div>
-                    <div class="p-3 bg-cyan-400/10 rounded-xl text-cyan-400">
-                        <i class="fa-solid fa-robot text-xl"></i>
-                    </div>
-                </div>
-                <div class="mt-3 flex gap-1.5" id="botMiniBadges">
-                    <span class="text-[10px] bg-slate-800 text-slate-500 px-2 py-0.5 rounded border border-slate-700">Bot 1</span>
-                    <span class="text-[10px] bg-slate-800 text-slate-500 px-2 py-0.5 rounded border border-slate-700">Bot 2</span>
-                    <span class="text-[10px] bg-slate-800 text-slate-500 px-2 py-0.5 rounded border border-slate-700">Bot 3</span>
-                    <span class="text-[10px] bg-slate-800 text-slate-500 px-2 py-0.5 rounded border border-slate-700">Bot 4</span>
-                </div>
-            </div>
+      <div class="action-buttons">
+        <button id="startBtn" class="btn primary">▶ Start Match</button>
+        <button id="stopBtn" class="btn danger" disabled>⏹ Stop</button>
+        <button id="resetBtn" class="btn secondary">↻ Reset</button>
+      </div>
+    </section>
 
-            <!-- Card 3: Matches Played -->
-            <div class="glass-panel rounded-2xl p-4 border-l-4 border-purple-500 relative overflow-hidden">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-xs text-slate-400 uppercase font-bold tracking-wider">Matches Completed</p>
-                        <h3 id="statMatchesPlayed" class="text-3xl font-extrabold text-purple-400 mt-1 font-mono">0</h3>
-                    </div>
-                    <div class="p-3 bg-purple-500/10 rounded-xl text-purple-400">
-                        <i class="fa-solid fa-gamepad text-xl"></i>
-                    </div>
-                </div>
-                <p class="text-xs text-slate-400 mt-3 flex items-center justify-between">
-                    <span>Booyah Rate: <strong class="text-slate-200">100%</strong></span>
-                    <span id="statModeBadge" class="text-[10px] bg-purple-500/20 text-purple-300 px-2 py-0.5 rounded uppercase">Solo</span>
-                </p>
-            </div>
+    <!-- Bot Cards -->
+    <section class="bots-grid" id="botsGrid"></section>
 
-            <!-- Card 4: Guild Connection Status -->
-            <div class="glass-panel rounded-2xl p-4 border-l-4 border-emerald-500 relative overflow-hidden">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <p class="text-xs text-slate-400 uppercase font-bold tracking-wider">Guild Target</p>
-                        <h3 id="statGuildName" class="text-lg font-bold text-white mt-1 truncate max-w-[150px]">Not Connected</h3>
-                    </div>
-                    <div class="p-3 bg-emerald-500/10 rounded-xl text-emerald-400">
-                        <i class="fa-solid fa-shield-halved text-xl"></i>
-                    </div>
-                </div>
-                <p class="text-xs text-slate-400 mt-3 flex items-center gap-1.5">
-                    <span id="guildStatusBadge" class="w-2 h-2 rounded-full bg-rose-500"></span>
-                    <span id="guildStatusText" class="text-slate-300">Guild ID Required</span>
-                </p>
-            </div>
+    <!-- Console -->
+    <section class="console-section">
+      <div class="console-header">
+        <h2>🖥️ Live Console</h2>
+        <button id="clearConsole" class="btn small">Clear</button>
+      </div>
+      <div class="console" id="console"></div>
+    </section>
+  </div>
 
-        </div>
-
-        <!-- Dashboard Grid Layout -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-            <!-- Left Controls Sidebar (4 cols) -->
-            <div class="lg:col-span-4 space-y-6">
-                
-                <!-- Main Control Panel -->
-                <div class="glass-panel rounded-2xl p-5 border border-cyber-border space-y-5">
-                    <h2 class="text-base font-bold text-white flex items-center gap-2 border-b border-cyber-border pb-3">
-                        <i class="fa-solid fa-sliders text-gold-500"></i> Bot Squad Controller
-                    </h2>
-
-                    <!-- Guild Configuration -->
-                    <div class="space-y-2">
-                        <label class="text-xs text-slate-300 font-medium">Guild Details</label>
-                        <div class="flex gap-2">
-                            <input type="text" id="inputGuildID" placeholder="Guild ID (e.g. 30129481)" value="3012948102"
-                                class="w-full bg-cyber-dark border border-cyber-border rounded-xl px-3 py-2 text-xs font-mono text-white focus:outline-none focus:border-gold-500 transition-colors">
-                            <button id="btnSyncGuild" onclick="syncGuild()" class="bg-cyber-border hover:bg-slate-700 text-xs px-3 py-2 rounded-xl font-semibold transition text-slate-200">
-                                Connect
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Bot Squad Mode Selection -->
-                    <div class="space-y-2">
-                        <label class="text-xs text-slate-300 font-medium">Squad Formation Mode</label>
-                        <div class="grid grid-cols-4 gap-2">
-                            <button onclick="setSquadMode(1)" id="btnMode1" class="mode-btn bg-gold-500 text-slate-950 font-bold py-2.5 rounded-xl text-xs flex flex-col items-center justify-center border border-gold-500 transition">
-                                <i class="fa-solid fa-user mb-1"></i> Solo (1)
-                            </button>
-                            <button onclick="setSquadMode(2)" id="btnMode2" class="mode-btn bg-cyber-dark text-slate-400 font-medium py-2.5 rounded-xl text-xs flex flex-col items-center justify-center border border-cyber-border hover:border-slate-600 transition">
-                                <i class="fa-solid fa-user-group mb-1"></i> Duo (2)
-                            </button>
-                            <button onclick="setSquadMode(3)" id="btnMode3" class="mode-btn bg-cyber-dark text-slate-400 font-medium py-2.5 rounded-xl text-xs flex flex-col items-center justify-center border border-cyber-border hover:border-slate-600 transition">
-                                <i class="fa-solid fa-users mb-1"></i> Trio (3)
-                            </button>
-                            <button onclick="setSquadMode(4)" id="btnMode4" class="mode-btn bg-cyber-dark text-slate-400 font-medium py-2.5 rounded-xl text-xs flex flex-col items-center justify-center border border-cyber-border hover:border-slate-600 transition">
-                                <i class="fa-solid fa-people-group mb-1"></i> Squad (4)
-                            </button>
-                        </div>
-                        <p class="text-[11px] text-slate-400 mt-1" id="modeDescription">
-                            *১ জন বট ডুও/স্কোয়াড ছাড়াই এককভাবে গ্লোরি পুশ করবে।
-                        </p>
-                    </div>
-
-                    <!-- Match Simulation Settings -->
-                    <div class="space-y-3 pt-2 border-t border-cyber-border">
-                        <div class="flex justify-between items-center">
-                            <label class="text-xs text-slate-300 font-medium">Match Simulation Speed</label>
-                            <span id="speedValueDisplay" class="text-xs font-mono text-gold-500">Fast (3 sec/match)</span>
-                        </div>
-                        <input type="range" id="matchSpeedRange" min="1" max="10" value="3" oninput="updateSpeedDisplay(this.value)"
-                            class="w-full h-1.5 bg-cyber-dark rounded-lg appearance-none cursor-pointer accent-gold-500">
-                    </div>
-
-                    <!-- Instant Start / No Delay Option -->
-                    <div class="flex items-center justify-between pt-2">
-                        <span class="text-xs text-slate-300 font-medium">Zero Match Queue Delay</span>
-                        <label class="relative inline-flex items-center cursor-pointer">
-                            <input type="checkbox" id="toggleNoDelay" class="sr-only peer" checked>
-                            <div class="w-9 h-5 bg-cyber-dark peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-gold-500"></div>
-                        </label>
-                    </div>
-
-                    <!-- Action Buttons -->
-                    <div class="pt-3 space-y-2">
-                        <button id="btnStartBot" onclick="toggleBotEngine()" class="w-full py-3 bg-gradient-to-r from-gold-500 to-amber-500 hover:from-gold-400 hover:to-amber-400 text-slate-950 font-extrabold rounded-xl shadow-lg gold-glow text-sm tracking-wide transition transform active:scale-95 flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-play"></i> START BOT MATCHMAKING
-                        </button>
-
-                        <button onclick="clearConsoleLogs()" class="w-full py-2 bg-cyber-dark hover:bg-slate-800 text-slate-400 hover:text-white border border-cyber-border rounded-xl text-xs font-semibold transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-trash-can"></i> Clear Terminal Logs
-                        </button>
-                    </div>
-
-                </div>
-
-                <!-- Squad Members Status -->
-                <div class="glass-panel rounded-2xl p-5 border border-cyber-border">
-                    <h3 class="text-xs uppercase tracking-wider text-slate-400 font-bold mb-3 flex items-center justify-between">
-                        <span>Bot Squad Slots</span>
-                        <span id="activeSlotCountText" class="text-gold-500">1 / 4 Active</span>
-                    </h3>
-
-                    <div id="botSlotsContainer" class="space-y-2">
-                        <!-- Dynamic Bot Slots rendered by JS -->
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- Right Terminal / Console Log Area (8 cols) -->
-            <div class="lg:col-span-8 space-y-4">
-                
-                <div class="glass-panel rounded-2xl border border-cyber-border overflow-hidden flex flex-col h-[650px] shadow-2xl">
-                    
-                    <!-- Terminal Header Bar -->
-                    <div class="bg-cyber-dark/90 px-4 py-3 border-b border-cyber-border flex flex-wrap items-center justify-between gap-3">
-                        <div class="flex items-center space-x-2">
-                            <div class="flex space-x-1.5">
-                                <span class="w-3 h-3 rounded-full bg-rose-500/80 inline-block"></span>
-                                <span class="w-3 h-3 rounded-full bg-amber-500/80 inline-block"></span>
-                                <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
-                            </div>
-                            <span class="text-xs font-mono text-slate-400 border-l border-slate-700 pl-3">ff-glory-bot:~ console.log</span>
-                        </div>
-
-                        <!-- Filter Controls -->
-                        <div class="flex items-center space-x-1 bg-cyber-card p-1 rounded-lg border border-cyber-border text-xs">
-                            <button onclick="filterLogs('ALL')" class="filter-btn px-2.5 py-1 rounded-md text-gold-500 bg-cyber-border font-medium">All</button>
-                            <button onclick="filterLogs('MATCH')" class="filter-btn px-2.5 py-1 rounded-md text-slate-400 hover:text-white font-medium">Matches</button>
-                            <button onclick="filterLogs('GLORY')" class="filter-btn px-2.5 py-1 rounded-md text-slate-400 hover:text-white font-medium">Glory</button>
-                            <button onclick="filterLogs('SUCCESS')" class="filter-btn px-2.5 py-1 rounded-md text-slate-400 hover:text-white font-medium">Booyah</button>
-                        </div>
-                    </div>
-
-                    <!-- Live Terminal Output Area -->
-                    <div id="terminalConsole" class="p-4 overflow-y-auto font-mono text-xs space-y-2.5 flex-1 bg-[#070a0f]">
-                        <div class="text-slate-500 border-b border-slate-800/60 pb-2">
-                            [SYSTEM READY] Free Fire Guild Glory Push Bot Script Loaded.<br>
-                            Select Squad Mode (Solo/Duo/Trio/Squad) and click "START BOT MATCHMAKING".
-                        </div>
-                    </div>
-
-                    <!-- Terminal Footer / Live Status Bar -->
-                    <div class="bg-cyber-dark px-4 py-2.5 border-t border-cyber-border flex items-center justify-between text-xs text-slate-400 font-mono">
-                        <div class="flex items-center gap-3">
-                            <span class="flex items-center gap-1.5 text-emerald-400">
-                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                                BR Mode: Active
-                            </span>
-                            <span id="currentGuildFoot" class="hidden sm:inline text-slate-500">| Guild: 3012948102</span>
-                        </div>
-                        <div>
-                            Logs: <span id="logCountDisplay" class="text-gold-500 font-bold">1</span> lines
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </main>
-
-    <!-- Modal for Detailed Log Match Info -->
-    <div id="logDetailModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-panel border border-gold-500/40 rounded-2xl max-w-md w-full p-6 space-y-4 gold-glow-lg">
-            <div class="flex justify-between items-center border-b border-cyber-border pb-3">
-                <h3 class="font-extrabold text-gold-500 text-lg flex items-center gap-2">
- 
+  <script src="script.js"></script>
+</body>
+</html>
