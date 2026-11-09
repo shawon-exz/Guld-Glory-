@@ -1,352 +1,388 @@
-// ==========================================
-// Free Fire Glory Bot Simulator v2
-// Guild UID + Auto Account + Random Names
-// ==========================================
+/* ==========================================
+   Free Fire Glory Bot v4 — Full Stylesheet
+   ========================================== */
 
-// ---------- State ----------
-let selectedCount = 0;
-let running = false;
-let intervalIds = [];
-let totalGlory = 0;
-let guildJoined = false;
-let currentGuildUid = "";
-
-const bots = [];
-
-// ---------- DOM ----------
-const botsGrid = document.getElementById("botsGrid");
-const consoleEl = document.getElementById("console");
-const totalGloryEl = document.getElementById("totalGlory");
-const activeBotsEl = document.getElementById("activeBots");
-const guildStatusEl = document.getElementById("guildStatus");
-const matchModeEl = document.getElementById("matchMode");
-const guildUidInput = document.getElementById("guildUid");
-const guildUidHint = document.getElementById("guildUidHint");
-const guildUidDisplay = document.getElementById("guildUidDisplay");
-const startBtn = document.getElementById("startBtn");
-const stopBtn = document.getElementById("stopBtn");
-const resetBtn = document.getElementById("resetBtn");
-const clearConsole = document.getElementById("clearConsole");
-
-// ---------- Console Logger ----------
-function log(msg, type = "info") {
-  const time = new Date().toLocaleTimeString("en-GB", { hour12: false });
-  const line = document.createElement("div");
-  line.className = `log-line ${type}`;
-  line.innerHTML = `<span class="log-time">[${time}]</span> ${msg}`;
-  consoleEl.appendChild(line);
-  consoleEl.scrollTop = consoleEl.scrollHeight;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, sans-serif;
 }
 
-// ---------- Random Name Generator ----------
-// Format: shawon + random 6 digit (e.g., shawon376336)
-function generateBotName() {
-  const digits = Math.floor(100000 + Math.random() * 900000);
-  return `shawon${digits}`;
+:root {
+  --bg-dark: #0d0f1a;
+  --bg-panel: #161a2b;
+  --bg-panel-2: #1e2438;
+  --accent-orange: #ff6b1a;
+  --accent-gold: #ffcc00;
+  --accent-green: #00e676;
+  --accent-red: #ff3b3b;
+  --accent-blue: #3b9bff;
+  --accent-purple: #b06bff;
+  --text-main: #e8ecf3;
+  --text-dim: #8b93a7;
+  --border: #2a3149;
+  --glow-orange: 0 0 12px rgba(255, 107, 26, 0.55);
+  --glow-gold: 0 0 12px rgba(255, 204, 0, 0.55);
+  --glow-green: 0 0 12px rgba(0, 230, 118, 0.55);
 }
 
-// ---------- Random FF UID Generator ----------
-function generateFFUid() {
-  return String(Math.floor(1000000000 + Math.random() * 9000000000));
+body {
+  background: radial-gradient(circle at top, #1a1f33 0%, #0d0f1a 70%);
+  color: var(--text-main);
+  min-height: 100vh;
+  padding: 20px;
 }
 
-// ---------- Generate 4 Bot Accounts ----------
-function initBots() {
-  bots.length = 0;
-  for (let i = 0; i < 4; i++) {
-    bots.push({
-      id: i,
-      name: generateBotName(),
-      ffUid: generateFFUid(),
-      active: false,
-      glory: 0,
-      matches: 0,
-      status: "Idle",
-      joinedGuild: false,
-    });
-  }
+.app {
+  max-width: 1150px;
+  margin: 0 auto;
 }
 
-// ---------- Render Bot Cards ----------
-function renderBots() {
-  botsGrid.innerHTML = "";
-  bots.forEach((bot) => {
-    const card = document.createElement("div");
-    card.className = `bot-card ${bot.active ? "active" : ""}`;
-    card.innerHTML = `
-      <div class="bot-header">
-        <span class="bot-name">🤖 ${bot.name}</span>
-        <span class="bot-status">${bot.status}</span>
-      </div>
-      <div class="bot-stats">
-        <span>🆔 FF UID: <b>${bot.ffUid}</b></span>
-        <span>🏆 Glory: <b>${bot.glory}</b></span>
-        <span>🎮 Matches: <b>${bot.matches}</b></span>
-        <span>🛡️ Guild: <b>${bot.joinedGuild ? "Joined ✅" : "Not Joined"}</b></span>
-      </div>
-    `;
-    botsGrid.appendChild(card);
-  });
+/* ---------- Header ---------- */
+.header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+.header h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.header h1 span {
+  color: var(--accent-orange);
+  text-shadow: var(--glow-orange);
+}
+.subtitle {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  margin-top: 6px;
 }
 
-// ---------- Update Scoreboard ----------
-function updateScoreboard() {
-  totalGloryEl.textContent = totalGlory;
-  activeBotsEl.textContent = bots.filter((b) => b.active).length;
-  guildStatusEl.textContent = guildJoined ? "Joined ✅" : "Not Joined";
-  guildStatusEl.style.color = guildJoined ? "var(--accent-green)" : "var(--accent-blue)";
-  guildUidDisplay.textContent = currentGuildUid || "—";
-
-  if (selectedCount === 0) matchModeEl.textContent = "—";
-  else if (selectedCount === 1) matchModeEl.textContent = "Solo";
-  else if (selectedCount === 2) matchModeEl.textContent = "Duo";
-  else matchModeEl.textContent = "Squad";
+/* ---------- Scoreboard ---------- */
+.scoreboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.score-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.score-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+.score-card .label {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.score-card .value {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: var(--accent-gold);
+  text-shadow: var(--glow-gold);
+}
+.score-card .value.small {
+  font-size: 0.95rem;
+  color: var(--accent-blue);
+  text-shadow: none;
+  word-break: break-all;
+}
+.score-card.total .value {
+  color: var(--accent-green);
+  text-shadow: var(--glow-green);
 }
 
-// ---------- Validate Guild UID ----------
-function validateGuildUid() {
-  const val = guildUidInput.value.trim();
-  const isValid = /^[0-9]{6,20}$/.test(val);
-
-  guildUidInput.classList.remove("valid", "invalid");
-  guildUidHint.classList.remove("ok", "err");
-
-  if (val === "") {
-    guildUidHint.textContent = "Guild UID না দিলে bot guild-এ join করতে পারবে না।";
-    currentGuildUid = "";
-  } else if (isValid) {
-    guildUidInput.classList.add("valid");
-    guildUidHint.textContent = `✅ Valid Guild UID: ${val}`;
-    guildUidHint.classList.add("ok");
-    currentGuildUid = val;
-  } else {
-    guildUidInput.classList.add("invalid");
-    guildUidHint.textContent = "❌ Guild UID শুধু ৬-২০ সংখ্যার হতে হবে।";
-    guildUidHint.classList.add("err");
-    currentGuildUid = "";
-  }
-
-  updateStartButton();
-  updateScoreboard();
+/* ---------- Controls ---------- */
+.controls {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+.controls h2 {
+  font-size: 1rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 14px;
 }
 
-// ---------- Update Start Button State ----------
-function updateStartButton() {
-  const canStart =
-    !running &&
-    currentGuildUid !== "" &&
-    selectedCount > 0;
-  startBtn.disabled = !canStart;
+/* ---------- Input Group ---------- */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.input-group label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+.input-group .required {
+  color: var(--accent-red);
+  font-weight: 800;
+}
+.input-group input {
+  padding: 12px 14px;
+  background: var(--bg-panel-2);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-main);
+  font-size: 1rem;
+  font-family: "Consolas", monospace;
+  letter-spacing: 1px;
+  outline: none;
+  transition: all 0.2s;
+}
+.input-group input:focus {
+  border-color: var(--accent-orange);
+  box-shadow: 0 0 0 3px rgba(255, 107, 26, 0.2);
+}
+.input-group input.valid {
+  border-color: var(--accent-green);
+  box-shadow: 0 0 0 3px rgba(0, 230, 118, 0.15);
+}
+.input-group input.invalid {
+  border-color: var(--accent-red);
+  box-shadow: 0 0 0 3px rgba(255, 59, 59, 0.15);
+}
+.hint {
+  font-size: 0.82rem;
+  color: var(--text-dim);
+  font-style: italic;
+}
+.hint.ok {
+  color: var(--accent-green);
+  font-style: normal;
+  font-weight: 600;
+}
+.hint.err {
+  color: var(--accent-red);
+  font-style: normal;
+  font-weight: 600;
 }
 
-// ---------- Guild UID Input Listener ----------
-guildUidInput.addEventListener("input", validateGuildUid);
+/* ---------- Mode Buttons ---------- */
+.mode-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.mode-btn {
+  flex: 1 1 140px;
+  padding: 12px;
+  background: var(--bg-panel-2);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.mode-btn:hover {
+  border-color: var(--accent-orange);
+  color: var(--accent-orange);
+}
+.mode-btn.active {
+  background: linear-gradient(135deg, var(--accent-orange), #ff9a3d);
+  color: #0d0f1a;
+  border-color: var(--accent-orange);
+  box-shadow: var(--glow-orange);
+}
 
-// ---------- Mode Selection ----------
-document.querySelectorAll(".mode-btn").forEach((btn) => {
-  btn.addEventListener("click", () => {
-    if (running) {
-      log("⚠️ Match চলছে, আগে Stop করুন!", "warn");
-      return;
-    }
-    document.querySelectorAll(".mode-btn").forEach((b) => b.classList.remove("active"));
-    btn.classList.add("active");
-    selectedCount = parseInt(btn.dataset.count);
-    const modeName = selectedCount === 1 ? "Solo" : selectedCount === 2 ? "Duo" : "Squad";
-    log(`🎯 Selected ${selectedCount} bot(s) — Mode: ${modeName}`, "info");
-    updateStartButton();
-    updateScoreboard();
-  });
-});
+/* ---------- Action Buttons ---------- */
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.btn {
+  flex: 1 1 140px;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.95rem;
+}
+.btn.primary {
+  background: linear-gradient(135deg, var(--accent-green), #00b85f);
+  color: #05130a;
+}
+.btn.primary:hover:not(:disabled) {
+  box-shadow: var(--glow-green);
+  transform: translateY(-2px);
+}
+.btn.danger {
+  background: linear-gradient(135deg, var(--accent-red), #c81f1f);
+  color: #fff;
+}
+.btn.danger:hover:not(:disabled) {
+  box-shadow: 0 0 12px rgba(255, 59, 59, 0.6);
+  transform: translateY(-2px);
+}
+.btn.secondary {
+  background: var(--bg-panel-2);
+  color: var(--text-main);
+  border: 1px solid var(--border);
+}
+.btn.secondary:hover {
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
+}
+.btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.btn.small {
+  flex: none;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+}
 
-// ---------- Start Match ----------
-startBtn.addEventListener("click", () => {
-  if (!currentGuildUid) {
-    log("❌ Guild UID ছাড়া bot guild-এ join করতে পারবে না!", "error");
-    return;
-  }
-  if (selectedCount === 0) {
-    log("❌ আগে Bot সংখ্যা সিলেক্ট করুন!", "error");
-    return;
-  }
-  if (running) return;
+/* ---------- Bot Cards ---------- */
+.bots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.bot-card {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s;
+}
+.bot-card.active {
+  border-color: var(--accent-green);
+  box-shadow: 0 0 18px rgba(0, 230, 118, 0.35);
+}
+.bot-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent-orange);
+  transition: background 0.3s;
+}
+.bot-card.active::before {
+  background: var(--accent-green);
+}
+.bot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 8px;
+}
+.bot-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--accent-orange);
+  font-family: "Consolas", monospace;
+  word-break: break-all;
+}
+.bot-card.active .bot-name {
+  color: var(--accent-green);
+}
+.bot-status {
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: var(--bg-panel-2);
+  color: var(--text-dim);
+  font-weight: 600;
+  white-space: nowrap;
+}
+.bot-card.active .bot-status {
+  background: rgba(0, 230, 118, 0.15);
+  color: var(--accent-green);
+}
+.bot-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 0.83rem;
+  color: var(--text-dim);
+}
+.bot-stats span b {
+  color: var(--text-main);
+}
 
-  running = true;
-  startBtn.disabled = true;
-  stopBtn.disabled = false;
+/* ---------- Console ---------- */
+.console-section {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.console-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 18px;
+  background: var(--bg-panel-2);
+  border-bottom: 1px solid var(--border);
+}
+.console-header h2 {
+  font-size: 1rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.console {
+  height: 380px;
+  overflow-y: auto;
+  padding: 14px 18px;
+  font-family: "Consolas", "Courier New", monospace;
+  font-size: 0.83rem;
+  line-height: 1.7;
+  background: #06080f;
+}
+.console::-webkit-scrollbar {
+  width: 8px;
+}
+.console::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
 
-  log("═══════════════════════════════════════════", "glow");
-  log(`🚀 Free Fire Glory Push শুরু হচ্ছে — ${selectedCount} Bot(s)`, "success");
-  log(`🛡️ Target Guild UID: ${currentGuildUid}`, "warn");
-  log("═══════════════════════════════════════════", "glow");
+.log-line {
+  margin-bottom: 2px;
+  animation: fadeIn 0.3s ease;
+}
+.log-time {
+  color: #5a6480;
+  margin-right: 6px;
+}
+.log-line.info { color: var(--accent-blue); }
+.log-line.success { color: var(--accent-green); }
+.log-line.warn { color: var(--accent-gold); }
+.log-line.error { color: var(--accent-red); }
+.log-line.glow { color: var(--accent-orange); }
+.log-line.purple { color: var(--accent-purple); }
 
-  // Reset active flags
-  bots.forEach((b) => {
-    b.active = false;
-    b.status = "Idle";
-    b.joinedGuild = false;
-  });
-
-  // Activate selected bots
-  for (let i = 0; i < selectedCount; i++) {
-    bots[i].active = true;
-    bots[i].status = "Booting...";
-  }
-  renderBots();
-  updateScoreboard();
-
-  // Phase 1: Bot account open
-  setTimeout(() => {
-    bots.filter((b) => b.active).forEach((bot, idx) => {
-      setTimeout(() => {
-        bot.status = "Opening FF Account";
-        log(`📱 [${bot.name}] Free Fire account খোলা হচ্ছে... (UID: ${bot.ffUid})`, "info");
-        renderBots();
-      }, idx * 400);
-    });
-  }, 400);
-
-  // Phase 2: Login
-  setTimeout(() => {
-    bots.filter((b) => b.active).forEach((bot, idx) => {
-      setTimeout(() => {
-        bot.status = "Logged In";
-        log(`🔐 [${bot.name}] Login successful → Account: ${bot.name} (${bot.ffUid})`, "success");
-        renderBots();
-      }, idx * 400);
-    });
-  }, 1800);
-
-  // Phase 3: Join Guild
-  setTimeout(() => {
-    bots.filter((b) => b.active).forEach((bot, idx) => {
-      setTimeout(() => {
-        bot.status = "Joining Guild...";
-        log(`🛡️ [${bot.name}] Guild UID ${currentGuildUid}-এ join request পাঠাচ্ছে...`, "info");
-        renderBots();
-      }, idx * 450);
-    });
-  }, 3200);
-
-  // Phase 4: Guild Joined
-  setTimeout(() => {
-    let count = 0;
-    bots.forEach((bot) => {
-      if (bot.active && !bot.joinedGuild) {
-        bot.joinedGuild = true;
-        bot.status = "In Guild";
-        count++;
-        log(`✅ [${bot.name}] Guild-এ join হয়েছে (Guild UID: ${currentGuildUid})`, "success");
-      }
-    });
-    guildJoined = count > 0;
-    renderBots();
-    updateScoreboard();
-  }, 5000);
-
-  // Phase 5: Team Formation + Battle Royale Start
-  setTimeout(() => {
-    const activeBots = bots.filter((b) => b.active);
-    const modeName = selectedCount === 1 ? "Solo" : selectedCount === 2 ? "Duo" : "Squad";
-    log(`👥 Team Formed: ${activeBots.map((b) => b.name).join(", ")}`, "glow");
-    log(`🎮 Battle Royale Match Started — Mode: ${modeName}`, "glow");
-
-    activeBots.forEach((b) => {
-      b.status = "In Match";
-    });
-    renderBots();
-
-    // Glory earning loop
-    activeBots.forEach((bot) => {
-      const id = setInterval(() => {
-        if (!running) return;
-        const gain = Math.floor(Math.random() * 40) + 10; // 10-50 glory per tick
-        bot.glory += gain;
-        totalGlory += gain;
-        if (Math.random() > 0.6) bot.matches += 1;
-
-        log(
-          `🏆 [${bot.name}] +${gain} Glory → নিজের Total: ${bot.glory}`,
-          "success"
-        );
-        log(`📊 Squad Total Glory: ${totalGlory}`, "warn");
-
-        updateScoreboard();
-        renderBots();
-      }, 2500 + Math.random() * 1500);
-      intervalIds.push(id);
-    });
-  }, 6000);
-});
-
-// ---------- Stop ----------
-stopBtn.addEventListener("click", () => {
-  running = false;
-  intervalIds.forEach(clearInterval);
-  intervalIds = [];
-  startBtn.disabled = false;
-  stopBtn.disabled = true;
-
-  bots.forEach((b) => {
-    if (b.active) {
-      b.status = "Stopped";
-      log(`⏹ [${b.name}] Stopped — Final Glory: ${b.glory}`, "warn");
-    }
-  });
-
-  log("═══════════════════════════════════════════", "glow");
-  log(`🛑 Match Stopped — Total Squad Glory: ${totalGlory}`, "error");
-  log("═══════════════════════════════════════════", "glow");
-
-  renderBots();
-  updateScoreboard();
-  updateStartButton();
-});
-
-// ---------- Reset ----------
-resetBtn.addEventListener("click", () => {
-  if (running) {
-    log("⚠️ আগে Stop করুন!", "warn");
-    return;
-  }
-  intervalIds.forEach(clearInterval);
-  intervalIds = [];
-
-  initBots();
-  totalGlory = 0;
-  selectedCount = 0;
-  guildJoined = false;
-
-  document.querySelectorAll(".mode-btn").forEach((b) => b.classList.remove("active"));
-  guildUidInput.value = "";
-  guildUidInput.classList.remove("valid", "invalid");
-  guildUidHint.textContent = "Guild UID না দিলে bot guild-এ join করতে পারবে না।";
-  guildUidHint.classList.remove("ok", "err");
-  currentGuildUid = "";
-
-  renderBots();
-  updateScoreboard();
-  updateStartButton();
-
-  log("🔄 Reset complete — নতুন random bot name + FF UID generate হয়েছে।", "info");
-  bots.forEach((b) => log(`   → ${b.name} (UID: ${b.ffUid})`, "info"));
-});
-
-// ---------- Clear Console ----------
-clearConsole.addEventListener("click", () => {
-  consoleEl.innerHTML = "";
-  log("🧹 Console cleared.", "info");
-});
-
-// ---------- Initial Load ----------
-initBots();
-renderBots();
-updateScoreboard();
-updateStartButton();
-
-log("🔥 Free Fire Glory Bot Simulator v2 loaded.", "success");
-log("👉 Step 1: Guild UID দিন (required!)", "info");
-log("👉 Step 2: Bot count সিলেক্ট করুন", "info");
-log("👉 Step 3: Start Match চাপুন", "info");
-log("─── Random Bot Accounts Generated ───", "glow");
-bots.forEach((b) => log(`   🤖 ${b.name} (UID: ${b.ffUid})`, "info"));
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
