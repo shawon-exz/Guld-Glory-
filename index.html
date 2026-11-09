@@ -1,115 +1,703 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FW AZAD BOT'S</title>
-    <meta name="description" content="Free Guild Glory Bot FF" />
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="FW AZAD BOT'S" />
-    <meta property="og:description" content="Free Guild Glory Bot FF" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="FW AZAD BOT'S" />
-    <meta name="twitter:description" content="Free Guild Glory Bot FF" />
-    <link rel="stylesheet" href="style.css" />
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <title>XH GLORY BOT PANEL</title>
+  <!-- Font Awesome 6 (free) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Google Fonts: Orbitron & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    /* ========== GLOBAL & THEME ========== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  <body>
-    <div id="root">
-      <!-- Header -->
-      <header class="header">
-        <div class="container header-inner">
-          <a href="#" class="logo">
-            <span class="logo-icon">🤖</span>
-            <span class="logo-text">FW AZAD BOT'S</span>
-          </a>
-          <nav class="nav">
-            <a href="#home">Home</a>
-            <a href="#features">Features</a>
-            <a href="#about">About</a>
-            <a href="#contact">Contact</a>
-          </nav>
-          <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
-        </div>
-      </header>
+    :root {
+      --bg-deep: #0a0c12;
+      --bg-card: rgba(18, 22, 35, 0.75);
+      --glass-border: rgba(0, 255, 255, 0.2);
+      --neon-blue: #00c8ff;
+      --neon-purple: #b300ff;
+      --neon-red: #ff3b3b;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b8d0;
+      --glow-blue: 0 0 12px rgba(0, 200, 255, 0.7);
+      --glow-purple: 0 0 12px rgba(179, 0, 255, 0.6);
+      --glow-red: 0 0 12px rgba(255, 59, 59, 0.7);
+    }
 
-      <!-- Hero -->
-      <section class="hero" id="home">
-        <div class="container hero-inner">
-          <h1 class="hero-title">Free Guild Glory Bot</h1>
-          <p class="hero-subtitle">
-            Boost your Free Fire guild with our automated glory bot. Fast, safe &amp; reliable.
-          </p>
-          <div class="hero-actions">
-            <button class="btn btn-primary" id="startBtn">Get Started</button>
-            <button class="btn btn-secondary" id="infoBtn">Learn More</button>
-          </div>
-        </div>
-      </section>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 30% 10%, #11162b, #05060a 90%);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
 
-      <!-- Features -->
-      <section class="features" id="features">
-        <div class="container">
-          <h2 class="section-title">Features</h2>
-          <div class="features-grid">
-            <div class="feature-card">
-              <div class="feature-icon">⚡</div>
-              <h3>Fast Glory</h3>
-              <p>Get guild glory quickly with our optimized bot.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">🔒</div>
-              <h3>Safe &amp; Secure</h3>
-              <p>Your account information is always protected.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">🎯</div>
-              <h3>Auto Mode</h3>
-              <p>Fully automated — no manual work required.</p>
-            </div>
-            <div class="feature-card">
-              <div class="feature-icon">💸</div>
-              <h3>100% Free</h3>
-              <p>No hidden costs. Completely free to use.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.4);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--neon-blue);
+      border-radius: 10px;
+      box-shadow: var(--glow-blue);
+    }
 
-      <!-- About -->
-      <section class="about" id="about">
-        <div class="container about-inner">
-          <h2 class="section-title">About</h2>
-          <p class="about-text">
-            FW AZAD BOT'S is a free guild glory bot designed for Free Fire players.
-            Our mission is to help small guilds reach the top without spending money.
-          </p>
-        </div>
-      </section>
+    /* ========== LAYOUT ========== */
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
 
-      <!-- Contact -->
-      <section class="contact" id="contact">
-        <div class="container">
-          <h2 class="section-title">Contact</h2>
-          <p class="contact-text">Have questions? Reach out to us.</p>
-          <form class="contact-form" id="contactForm">
-            <input type="text" name="name" placeholder="Your Name" required />
-            <input type="email" name="email" placeholder="Your Email" required />
-            <textarea name="message" rows="4" placeholder="Your Message" required></textarea>
-            <button type="submit" class="btn btn-primary">Send Message</button>
-          </form>
-          <p class="form-status" id="formStatus"></p>
-        </div>
-      </section>
+    /* ========== SIDEBAR ========== */
+    .sidebar {
+      width: 260px;
+      background: rgba(10, 14, 23, 0.85);
+      backdrop-filter: blur(12px);
+      border-right: 1px solid rgba(0, 255, 255, 0.2);
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+      position: fixed;
+      height: 100vh;
+      z-index: 100;
+      transition: transform 0.3s ease;
+      box-shadow: 4px 0 25px rgba(0, 0, 0, 0.7);
+    }
 
-      <!-- Footer -->
-      <footer class="footer">
-        <div class="container footer-inner">
-          <p>&copy; <span id="year"></span> FW AZAD BOT'S. All rights reserved.</p>
-        </div>
-      </footer>
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple), var(--neon-red));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 20px rgba(0, 200, 255, 0.4);
+      text-align: center;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(0, 200, 255, 0.3);
+    }
+
+    .logo span {
+      display: block;
+      font-size: 0.7rem;
+      letter-spacing: 6px;
+      color: var(--text-secondary);
+      font-family: 'Inter', sans-serif;
+      margin-top: 6px;
+      text-shadow: none;
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+    }
+
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      list-style: none;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      border-radius: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: 1px solid transparent;
+    }
+
+    .nav-item i {
+      font-size: 1.3rem;
+      width: 24px;
+      text-align: center;
+      color: var(--neon-blue);
+    }
+
+    .nav-item:hover,
+    .nav-item.active {
+      background: rgba(0, 200, 255, 0.08);
+      border-color: rgba(0, 200, 255, 0.3);
+      color: #fff;
+      box-shadow: 0 0 20px rgba(0, 200, 255, 0.2);
+      transform: translateX(4px);
+    }
+
+    .nav-item.active i {
+      color: var(--neon-purple);
+      text-shadow: var(--glow-purple);
+    }
+
+    /* ========== MAIN CONTENT ========== */
+    .main {
+      flex: 1;
+      margin-left: 260px;
+      padding: 2rem 2rem 2rem 2.5rem;
+      transition: margin 0.3s;
+    }
+
+    /* Mobile header */
+    .mobile-top {
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.5rem;
+    }
+
+    .burger {
+      font-size: 2rem;
+      color: var(--neon-blue);
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 0.4rem 0.8rem;
+      border-radius: 8px;
+      border: 1px solid var(--glass-border);
+    }
+
+    /* ========== CARDS & PANELS ========== */
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 1.5rem;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 255, 255, 0.05);
+      transition: box-shadow 0.3s;
+    }
+
+    .glass-card:hover {
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 200, 255, 0.15);
+    }
+
+    .section-title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(0, 200, 255, 0.5);
+    }
+
+    .section-title i {
+      color: var(--neon-blue);
+      font-size: 1.8rem;
+    }
+
+    /* Dashboard stats grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: rgba(10, 15, 25, 0.7);
+      backdrop-filter: blur(8px);
+      border-radius: 20px;
+      padding: 1.5rem;
+      border: 1px solid rgba(0, 200, 255, 0.25);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+      transition: all 0.3s;
+    }
+
+    .stat-card:hover {
+      border-color: var(--neon-purple);
+      box-shadow: 0 0 25px rgba(179, 0, 255, 0.3);
+      transform: translateY(-4px);
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--text-secondary);
+      margin-bottom: 0.8rem;
+    }
+
+    .stat-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      line-height: 1.2;
+      color: #fff;
+      text-shadow: 0 0 12px rgba(0, 200, 255, 0.8);
+    }
+
+    .stat-sub {
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .online-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #00ff88;
+      box-shadow: 0 0 12px #00ff88;
+      margin-right: 6px;
+    }
+    .offline-dot {
+      background: #ff3b3b;
+      box-shadow: 0 0 12px #ff3b3b;
+    }
+    .yellow-dot {
+      background: #ffc107;
+      box-shadow: 0 0 10px #ffc107;
+    }
+
+    /* Guild / Bot forms */
+    .form-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .input-group {
+      flex: 1 1 200px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .input-group label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-secondary);
+    }
+
+    .input-group input,
+    .input-group select {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(0, 200, 255, 0.4);
+      color: #fff;
+      padding: 0.9rem 1rem;
+      border-radius: 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    .input-group input:focus,
+    .input-group select:focus {
+      border-color: var(--neon-purple);
+      box-shadow: 0 0 15px rgba(179, 0, 255, 0.5);
+      background: rgba(10, 20, 40, 0.8);
+    }
+
+    .neon-btn {
+      background: transparent;
+      border: 2px solid var(--neon-blue);
+      color: var(--neon-blue);
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      padding: 0.9rem 1.8rem;
+      border-radius: 40px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.7rem;
+      box-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
+    }
+
+    .neon-btn:hover {
+      background: var(--neon-blue);
+      color: #000;
+      box-shadow: 0 0 30px var(--neon-blue), 0 0 10px #fff;
+    }
+
+    .neon-btn.purple {
+      border-color: var(--neon-purple);
+      color: var(--neon-purple);
+      box-shadow: 0 0 10px rgba(179, 0, 255, 0.3);
+    }
+    .neon-btn.purple:hover {
+      background: var(--neon-purple);
+      color: #000;
+      box-shadow: 0 0 30px var(--neon-purple);
+    }
+
+    .neon-btn.red {
+      border-color: var(--neon-red);
+      color: var(--neon-red);
+      box-shadow: 0 0 10px rgba(255, 59, 59, 0.3);
+    }
+    .neon-btn.red:hover {
+      background: var(--neon-red);
+      color: #000;
+      box-shadow: 0 0 30px var(--neon-red);
+    }
+
+    /* Bot slots grid */
+    .bots-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+
+    .bot-card {
+      background: rgba(10, 15, 25, 0.8);
+      border: 1px solid rgba(179, 0, 255, 0.3);
+      border-radius: 20px;
+      padding: 1.5rem;
+      transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .bot-card.online {
+      border-color: var(--neon-blue);
+      box-shadow: 0 0 25px rgba(0, 200, 255, 0.25);
+    }
+
+    .bot-card.offline {
+      opacity: 0.85;
+      border-color: rgba(255, 59, 59, 0.3);
+    }
+
+    .bot-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .bot-name {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .bot-status {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 0.3rem 0.8rem;
+      border-radius: 30px;
+      font-weight: 700;
+    }
+
+    .bot-status.online {
+      background: rgba(0, 255, 136, 0.15);
+      color: #00ff88;
+      border: 1px solid #00ff88;
+      box-shadow: 0 0 12px rgba(0, 255, 136, 0.3);
+    }
+
+    .bot-status.offline {
+      background: rgba(255, 59, 59, 0.15);
+      color: #ff3b3b;
+      border: 1px solid #ff3b3b;
+    }
+
+    .bot-detail {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .bot-detail span:last-child {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .bot-actions {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+    }
+
+    .bot-actions .neon-btn {
+      flex: 1;
+      padding: 0.6rem 1rem;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+    }
+
+    /* Console specific */
+    .console-box {
+      background: #070b12;
+      border-radius: 20px;
+      border: 1px solid rgba(0, 200, 255, 0.4);
+      padding: 1.5rem;
+      font-family: 'Orbitron', monospace;
+      box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8), 0 0 25px rgba(0, 200, 255, 0.15);
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .console-line {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.9rem;
+      border-bottom: 1px solid rgba(0, 200, 255, 0.1);
+      padding: 0.6rem 0;
+      color: #c0e0ff;
+      align-items: flex-start;
+    }
+
+    .console-time {
+      color: var(--neon-blue);
+      font-weight: 600;
+      min-width: 90px;
+      font-size: 0.8rem;
+    }
+
+    .console-msg {
+      flex: 1;
+      word-break: break-word;
+    }
+
+    .console-tag {
+      display: inline-block;
+      padding: 0.15rem 0.5rem;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      margin-right: 0.5rem;
+      text-transform: uppercase;
+    }
+
+    .tag-info { background: #0066ff33; color: #66b0ff; border: 1px solid #66b0ff; }
+    .tag-success { background: #00ff8833; color: #00ff88; border: 1px solid #00ff88; }
+    .tag-warn { background: #ffc10733; color: #ffc107; border: 1px solid #ffc107; }
+    .tag-error { background: #ff3b3b33; color: #ff3b3b; border: 1px solid #ff3b3b; }
+
+    /* Server panel */
+    .server-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      align-items: flex-end;
+      margin-bottom: 1.5rem;
+    }
+
+    /* Tabs / views */
+    .view {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .sidebar {
+        width: 220px;
+        padding: 1.5rem 0.8rem;
+      }
+      .main {
+        margin-left: 220px;
+        padding: 1.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        width: 260px;
+      }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main {
+        margin-left: 0;
+        padding: 1.2rem;
+      }
+      .mobile-top {
+        display: flex;
+      }
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .console-line {
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+      .console-time {
+        min-width: auto;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .stats-grid {
+        grid-template-columns: 1fr;
+      }
+      .bot-actions {
+        flex-direction: column;
+      }
+      .section-title {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      XH GLORY<br><span>BOT PANEL</span>
+    </div>
+    <ul class="nav-menu">
+      <li class="nav-item active" data-view="dashboard"><i class="fas fa-chart-pie"></i> Dashboard</li>
+      <li class="nav-item" data-view="guild"><i class="fas fa-shield-alt"></i> Guild Settings</li>
+      <li class="nav-item" data-view="bots"><i class="fas fa-robot"></i> Bot Management</li>
+      <li class="nav-item" data-view="console"><i class="fas fa-terminal"></i> Console</li>
+      <li class="nav-item" data-view="server"><i class="fas fa-server"></i> Server Management</li>
+    </ul>
+    <div style="margin-top: auto; text-align: center; font-size: 0.7rem; color: var(--text-secondary);">
+      <i class="fas fa-shield"></i> Frontend Demo · v2.0
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- Mobile top bar -->
+    <div class="mobile-top">
+      <div class="logo" style="font-size: 1.4rem; padding: 0; border: none;">XH GLORY</div>
+      <div class="burger" id="burger"><i class="fas fa-bars"></i></div>
     </div>
 
-    <script src="script.js"></script>
-  </body>
-  </html>
+    <!-- ========== VIEW: DASHBOARD ========== -->
+    <section id="view-dashboard" class="view active">
+      <div class="section-title"><i class="fas fa-chart-line"></i> DASHBOARD</div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">Total Glory</div>
+          <div class="stat-value" id="dash-total-glory">18,430</div>
+          <div class="stat-sub"><i class="fas fa-arrow-up" style="color:#00ff88;"></i> +2,340 today</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Active Bots</div>
+          <div class="stat-value" id="dash-active-bots">3 / 4</div>
+          <div class="stat-sub"><span class="online-dot"></span> 3 online</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Guild Joined</div>
+          <div class="stat-value" id="dash-guild-joined">2</div>
+          <div class="stat-sub"><i class="fas fa-check-circle" style="color:var(--neon-blue);"></i> XH_Elite</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Server Status</div>
+          <div class="stat-value" style="font-size:1.8rem;"><span class="online-dot"></span> Online</div>
+          <div class="stat-sub">BD-01 · 42ms</div>
+        </div>
+      </div>
+
+      <div class="glass-card" style="margin-top: 1rem;">
+        <div class="section-title" style="font-size:1.2rem;"><i class="fas fa-info-circle"></i> Quick Status</div>
+        <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: space-between;">
+          <div><i class="fas fa-crown" style="color: gold;"></i> Guild: <strong id="quick-guild">XH_ELITE</strong></div>
+          <div><i class="fas fa-server" style="color: var(--neon-blue);"></i> Server: <strong id="quick-server">Bangladesh</strong></div>
+          <div><i class="fas fa-microchip" style="color: var(--neon-purple);"></i> Bots: <strong id="quick-bots">3 online</strong></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== VIEW: GUILD ========== -->
+    <section id="view-guild" class="view">
+      <div class="section-title"><i class="fas fa-shield-alt"></i> GUILD SETTINGS</div>
+      <div class="glass-card">
+        <div class="form-row">
+          <div class="input-group">
+            <label>Guild UID</label>
+            <input type="text" id="guild-uid" placeholder="e.g. 12345678" value="87451236">
+          </div>
+          <div class="input-group">
+            <label>Guild Name</label>
+            <input type="text" id="guild-name" placeholder="e.g. XH_ELITE" value="XH_ELITE">
+          </div>
+          <div class="input-group">
+            <label>Server</label>
+            <select id="guild-server">
+              <option value="Bangladesh" selected>Bangladesh</option>
+              <option value="India">India</option>
+              <option value="Singapore">Singapore</option>
+              <option value="Brazil">Brazil</option>
+              <option value="Indonesia">Indonesia</option>
+            </select>
+          </div>
+        </div>
+        <button class="neon-btn" id="join-guild-btn"><i class="fas fa-sign-in-alt"></i> JOIN GUILD</button>
+
+        <div style="margin-top: 1.8rem; padding: 1rem; background: rgba(0,0,0,0.3); border-radius: 16px; border-left: 4px solid var(--neon-blue);">
+          <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.8rem;">
+            <div><i class="fas fa-check-circle" style="color:#00ff88;"></i> Joined: <strong id="guild-joined-status">XH_ELITE</strong></div>
+            <div><i class="fas fa-globe"></i> Server: <strong id="guild-server-status">Bangladesh</strong></div>
+            <div><i class="fas fa-users"></i> Members: <strong>48/50</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== VIEW: BOTS ========== -->
+    <section id="view-bots" class="view">
+      <div class="section-title"><i class="fas fa-robot"></i> BOT MANAGEMENT</div>
+      <div class="bots-grid" id="bots-container">
+        <!-- BOT 1 -->
+        <div class="bot-card online" id="bot-card-1">
+          <div class="bot-header">
+            <div class="bot-name">XH_ALPHA</div>
+            <div class="bot-status online" id="bot-status-1">Online</div>
+          </div>
+          <div class="bot-detail"><span>UID</span> <span id="bot-uid-1">73829104</span></div>
+          <div class="bot-detail"><span>Glory</span> <span id="bot-glory-1">6,430</span></div>
+          <div class="bot-detail"><span>Guild</span> <span id="bot-guild-1" style="color:#00ff88;">XH_ELITE</span></div>
+          <div class="bot-actions">
+            <button class="neon-btn" onclick="startBot(1)">START</button>
+            <button class="neon-btn red" onclick="stopBot(1)">STOP</button>
+          </div>
+        </div>
+        <!-- BOT 2 -->
+        <div class="bot-card online" id="bot-card-2">
+          <div class="bot-hea
